@@ -1,0 +1,84 @@
+# Test Case: Kara David's Wish Note
+
+**1. Test Case ID:** TC-DataEntry-001
+
+**2. Test Case Title:** Data Entry - Valid
+
+**3. Test Case Description:** Functional testing of the Data Entry page with backend validation using MySQL queries.
+
+**4. Preconditions:**
+- Kara David's Wish Note application is installed and accessible locally.
+- Apache and MariaDB services are running.
+- The `birthday_wishnote` database and `main_corrupt_politicians` table exist.
+- The application is accessed using a web browser.
+
+**5. Test Data:** Five valid entries containing First Name, Last Name, Government Position, and Location within their maximum character limits.
+
+**6. Test Steps:**
+
+a. Verify that the form contains labels in the proper order and the text boxes are writable.
+
+b. Verify the "Send Wish Note" button.
+
+c. Enter valid test data into the respective fields.
+
+d. Click "Send Wish Note" and verify that a modal appears.
+
+e. Verify that the modal contains the same entries as the test data.
+
+f. Click the Cancel button.
+
+g. Click "Send Wish Note" again, then click "Confirm & Send" in the modal.
+
+h. Verify that a successful entry message appears on the Data Entry page.
+
+i. Verify the submitted test data in the database using this MySQL query:
+
+```sql
+USE birthday_wishnote;
+
+SELECT FirstName, LastName, GovPosition, Location
+FROM main_corrupt_politicians;
+```
+
+**7. Expected Results:**
+
+a. The form contains labels in this order: "Target's First Name", "Target's Last Name", "Target's Government Position", and "Target's Location". All text boxes are writable.
+
+b. The "Send Wish Note" button changes color on hover and is enabled.
+
+c. The respective fields accept valid test data.
+
+d. A modal appears when "Send Wish Note" is clicked.
+
+e. The modal displays all four entered values correctly.
+
+f. The modal closes without submitting the form.
+
+g. The application submits the data after "Confirm & Send" is clicked.
+
+h. The success message "Success! The wish note has been sent." appears.
+
+i. All four submitted values, including Location, are correctly stored in the database.
+
+**8. Actual Results:**
+
+a. The form displayed the four fields in the required order, and the text boxes were writable.
+
+b. The "Send Wish Note" button was enabled. The hover color behavior should be confirmed during testing.
+
+c. The application accepted the sample entries.
+
+d. A modal appeared during submission.
+
+e. Confirm that the modal displayed the exact entered values before marking this step complete.
+
+f. Confirm that Cancel closed the modal without submitting before marking this step complete.
+
+g. The application submitted the data after confirmation.
+
+h. The success message appeared after submission.
+
+i. The SQL query returned the submitted names and government positions, but the `Location` column was `NULL`. The submitted location was not saved because the application's INSERT statement omits the `Location` column.
+
+**9. Status:** Failed — the database verification in step i did not meet the expected result.
